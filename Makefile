@@ -1,28 +1,48 @@
-SRCS = 
+SRC_SERV = server.c 
+SRC_CL = client.c
 
-HS = 
+HS = minitalk.h
 
-OBJS = ${SRCS:.c=.o}
-DEPS = ${SRCS:.c=.d}
+LIBFT_DIR = ./libft/
+LIBFT = ./libft/libft.a
+
+INCLUDES = -I . -I $(LIBFT_DIR)
+
+OBJS_SERV = ${SRC_SERV:.c=.o}
+DEPS_SERV = ${SRC_SERV:.c=.d}
+
+OBJS_CL = ${SRC_CL:.c=.o}
+DEPS_CL = ${SRC_CL:.c=.d}
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -MMD -MP
 RM = rm -f
 
-NAME = server client
+SERVER = server
+CLIENT = client
 
-all : $(NAME)
+all : $(LIBFT) $(SERVER) $(CLIENT) Makefile $(LIBFT_DIR)/Makefile
 
-$(NAME) : $(OBJS)
-	$(CC) $(FLAGS) -c $< -o $(<:.c:.o)
+%.o : %.c
+	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $(<:.c=.o)
+
+$(SERVER) : $(OBJS_SERV)
+	$(CC) $(FLAGS) $(INCLUDES) $(OBJS_SERV) -o $(SERVER)
+
+$(CLIENT) : $(OBJS_CL)
+	$(CC) $(FLAGS) $(INCLUDES) $(OBJS_CL) -o $(CLIENT)
+
+$(LIBFT) :
+	make -C $(LIBFT_DIR)
 
 clean :
-	$(RM) $(OBJS)
+	make clean -C $(LIBFT_DIR)
+	$(RM) $(OBJS_SERV) $(OBJS_CL) $(DEPS_SERV) $(DEPS_CL)
 
 fclean : clean
-	$(RM) $(NAME)
+	make fclean -C $(LIBFT_DIR)
+	$(RM) $(SERVER) $(CLIENT)
 
-re : fclean $(NAME)
-
+re : fclean all
 
 .PHONY: all clean fclean re

@@ -17,7 +17,7 @@ So far, we mostly handled type defined char / int which are easy to visualise fo
 Fundamental knowledge: `8 bit = 1 Byte` <br>
 Combinations x Byte: `2^(8*#Bytes)`
 
-> Check Born2Beroot for more about the GiB vs GB fight
+> Check Born2Beroot for more about the GiB vs GB differences
 
 Any built-in data types are a way to say to the computer how many sets of 8 bit or bytes he needs to read in order to properly evaluate the stored value for the specific variable.
 
@@ -61,10 +61,13 @@ A few interesting things:
 * A bitwise NOT is like a XOR between 11111111 and the 8 bits value;
 * `>>` and `<<` are equivalent to a division by 2 and a multiplication by 2;
 
+## Code explaination
+
+This project requires the creation of 2 programs, a client and a server, which needs to be able to communicate with each others via the usage of signals. To accomplish this, the client will deconstruct the message bit by bit and the server will be able to reconstruct it.
+
 ## Structure of sigaction
 
 ```
-
 struct sigaction {
     void     (*sa_handler)(int);
     void     (*sa_sigaction)(int, siginfo_t *, void *);
@@ -72,21 +75,15 @@ struct sigaction {
     int        sa_flags;
     void     (*sa_restorer)(void);
 };
-
 ```
 
-Based on the signal received and on the current position, either add 1 or pass
+* `sa_handler`: Function that is activated in order to handle a specific signal;
+    * `sigaction(SIG, struct sigaction sa, Previous signal?)` binds sa to the signal raised by SIG;
+* `sa_mask`: No idea;
+* `sa_flags`: Are used to specify specific behaviors when the handler is called;
 
-Add 1 position to last_bit before doing anything, so that is possible to add info to last char
+## Questions
 
-Should this be filled left to right or right to left? Best left to right with atoi algo idea
-
-`c |= (sig == SIGUSR2);`
-
-Assignment is done, we can move the bit_pos of a pos
-
-`bit_pos++;`
-
-We don't know if the char is finished or in the middle. We keep track of this via last_bit;
-
-This has added the 0 or 1 to the last bit. At each cycle / call we need to shift it left
+* Can the server handle multiple clients at the same time?
+* ASCII is cool, but what about UTF-8?
+    * Suspect: UTF-8 or Unicode with 8 bits, should work as a series of characters to represent as many values as stored in a int;
