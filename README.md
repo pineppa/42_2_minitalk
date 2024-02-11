@@ -78,12 +78,12 @@ struct sigaction {
 ```
 
 * `sa_handler`: Function that is activated in order to handle a specific signal;
-    * `sigaction(SIG, struct sigaction sa, Previous signal?)` binds sa to the signal raised by SIG;
-* `sa_mask`: No idea;
+* `sigaction(SIG, struct sigaction sa, Previous signal?)` binds sa to the signal raised by SIG;
+> NOTE: On some architectures a union is involved: do not assign to both `sa_handler` and `sa_sigaction`;
+* `sa_mask`: Governs the set of signals that are allowed to be triggered and used;
 * `sa_flags`: Are used to specify specific behaviors when the handler is called;
 
 ## Questions
 
-* Can the server handle multiple clients at the same time?
 * ASCII is cool, but what about UTF-8?
     * Suspect: UTF-8 or Unicode with 8 bits, should work as a series of characters to represent as many values as stored in a int;
