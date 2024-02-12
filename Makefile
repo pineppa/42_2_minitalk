@@ -1,12 +1,10 @@
-SRC_SERV = server.c 
+SRC_SERV = server.c
 SRC_CL = client.c
-
-HS = minitalk.h
 
 LIBFT_DIR = ./libft/
 LIBFT = ./libft/libft.a
 
-INCLUDES = -I . -I $(LIBFT_DIR)
+HS = minitalk.h $(LIBFT)
 
 OBJS_SERV = ${SRC_SERV:.c=.o}
 DEPS_SERV = ${SRC_SERV:.c=.d}
@@ -15,22 +13,24 @@ OBJS_CL = ${SRC_CL:.c=.o}
 DEPS_CL = ${SRC_CL:.c=.d}
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -MMD -MP
+FLAGS = -Wall -Wextra -Werror -MMD
 RM = rm -f
 
 SERVER = server
 CLIENT = client
 
-all : $(LIBFT) $(SERVER) $(CLIENT) Makefile $(LIBFT_DIR)/Makefile
+all : $(LIBFT) $(SERVER) $(CLIENT)
 
-%.o : %.c
-	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $(<:.c=.o)
+-include ${DEPS_SERV} ${DEPS_CL}
+
+%.o : %.c Makefile
+	$(CC) $(FLAGS) -c $< -o $(<:.c=.o)
 
 $(SERVER) : $(OBJS_SERV)
-	$(CC) $(FLAGS) $(INCLUDES) $(OBJS_SERV) -o $(SERVER)
+	$(CC) $(FLAGS) $(LIBFT) $(OBJS_SERV) -o $(SERVER)
 
 $(CLIENT) : $(OBJS_CL)
-	$(CC) $(FLAGS) $(INCLUDES) $(OBJS_CL) -o $(CLIENT)
+	$(CC) $(FLAGS) $(LIBFT) $(OBJS_CL) -o $(CLIENT)
 
 $(LIBFT) :
 	make -C $(LIBFT_DIR)

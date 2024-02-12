@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsala <jacopo.sala@student.barcelona.co    +#+  +:+       +#+        */
+/*   By: jsala <jsala@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:45:23 by jsala             #+#    #+#             */
-/*   Updated: 2024/01/19 18:06:52 by jsala            ###   ########.fr       */
+/*   Updated: 2024/02/08 18:28:23 by jsala            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <stdio.h>
 
 void	handle_sigusr(int sig, siginfo_t *info, void *context)
 {
@@ -34,8 +33,10 @@ void	handle_sigusr(int sig, siginfo_t *info, void *context)
 	}
 	else
 		c <<= 1;
-	if (c == 0) // FIX THIS
-		printf("%i", client_pid);
+	if (c == 0)
+	{
+		kill(client_pid, SIGUSR2);
+	}
 }
 
 int main(void)
