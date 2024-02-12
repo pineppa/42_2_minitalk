@@ -6,7 +6,7 @@
 /*   By: jsala <jsala@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:45:17 by jsala             #+#    #+#             */
-/*   Updated: 2024/02/12 09:11:22 by jsala            ###   ########.fr       */
+/*   Updated: 2024/02/12 10:58:40 by jsala            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 
 	if (argc != 3)
 		ft_handle_errors("Wrong call. Use: './client < Server Process ID > < Message >'\n");
-	server_pid = ft_atoi(argv[1]); // Should properly handle wrong values
+	server_pid = ft_atoi(argv[1]);
 	if (!server_pid)
 		ft_handle_errors("Wrong server PID\n");
 	sa_response.sa_handler = 0;

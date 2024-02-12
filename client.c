@@ -6,7 +6,7 @@
 /*   By: jsala <jsala@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:45:17 by jsala             #+#    #+#             */
-/*   Updated: 2024/02/08 18:10:53 by jsala            ###   ########.fr       */
+/*   Updated: 2024/02/12 10:58:12 by jsala            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,13 @@ void	send_message(int server_pid, char *str)
 
 int main(int argc, char **argv)
 {
+	int	pid_server;
+
 	if (argc != 3)
 		return (0);
-	send_message(ft_atoi(argv[1]), argv[2]);
+	pid_server = ft_atoi(argv[1]);
+	if (pid_server == -1)
+		ft_handle_errors("Please insert a valid server PID value");
+	send_message(pid_server, argv[2]);
 	return (0);
 }
