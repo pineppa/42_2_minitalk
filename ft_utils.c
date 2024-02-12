@@ -6,7 +6,7 @@
 /*   By: jsala <jsala@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:30:16 by jsala             #+#    #+#             */
-/*   Updated: 2024/02/09 17:22:28 by jsala            ###   ########.fr       */
+/*   Updated: 2024/02/12 10:41:02 by jsala            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ int	ft_atoi(const char *str)
 			sign = -sign;
 	}
 	while ((str[i] >= '0' && str[i] <= '9') && str[i])
-		val = 10 * val + (str[i++] - '0');
+		{
+			if (val > 4200000)
+				return (-1);
+			val = 10 * val + (str[i++] - '0');
+		}
 	return (val * sign);
 }
 
