@@ -78,16 +78,12 @@ struct sigaction {
 ```
 
 * `sa_handler`: Function that is activated in order to handle a specific signal;
-    * `sigaction(SIG, struct sigaction sa, Previous signal?)` binds sa to the signal raised by SIG;
-* `sa_mask`: No idea; -> Check info, I think it is what is allowed;
-* `sa_flags`: Are used to specify specific behaviors when the handler is called. In this project
-    * `SA_RESTART` (or val 0x0002) restarts the sistem on signal return
-    * `SA_SIGINFO` (or val 0x0040) contains SIGINFO arguments. This forces the use of the sigaction function instead of sa_handler, that is instead set to 0.
-* `sa.sigaction` is given the pointer to the function to be used to handle sa's signals.
-* `sigaction(Signal, pointer to sa, NULL?)`
+* `sigaction(SIG, struct sigaction sa, Previous signal?)` binds sa to the signal raised by SIG;
+> NOTE: On some architectures a union is involved: do not assign to both `sa_handler` and `sa_sigaction`;
+* `sa_mask`: Governs the set of signals that are allowed to be triggered and used;
+* `sa_flags`: Are used to specify specific behaviors when the handler is called;
 
 ## Questions
 
 * ASCII is cool, but what about UTF-8?
     * Suspect: UTF-8 or Unicode with 8 bits, should work as a series of characters to represent as many values as stored in a int;
-
